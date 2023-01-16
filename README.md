@@ -247,7 +247,141 @@ SELECT building, SUM(years_employed)
   GROUP BY building;
 ```
 
+### Exercise SQL Lesson 11
+#### Queries with aggregates (Pt. 2)
+For this exercise, you are going to dive deeper into Employee data at the film studio. Think about the different clauses you want to apply for each task.
+1. Find the number of Artists in the studio (without a HAVING clause)
+```
+SELECT COUNT(role) FROM employees
+  where role like "%Art%";
+```
+2. Find the number of Employees of each role in the studio
+```
+SELECT role, COUNT(role) FROM employees
+GROUP BY role;
+```
+3. Find the total number of years employed by all Engineers
+```
+SELECT role, SUM(years_employed) FROM employees
+WHERE role like "Engineer"
+GROUP BY role;
+```
 
+### Exercise SQL Lesson 12
+#### Order of execution of a Query
+Here ends our lessons on SELECT queries, congrats of making it this far! This exercise will try and test your understanding of queries, so don't be discouraged if you find them challenging. Just try your best.
+1. Find the number of movies each director has directed
+```
+SELECT director, COUNT(title)
+FROM movies
+GROUP BY director;
+```
+2. Find the total domestic and international sales that can be attributed to each director
+```
+SELECT director, SUM(domestic_sales+international_sales) as total_sales
+  FROM movies
+  INNER JOIN boxoffice ON movies.id=boxoffice.movie_id
+  GROUP BY director;
+```
+
+### Exercise SQL Lesson 13
+#### Inserting rows
+In this exercise, we are going to play studio executive and add a few movies to the Movies to our portfolio. In this table, the Id is an auto-incrementing integer, so you can try inserting a row with only the other columns defined.
+
+Since the following lessons will modify the database, you'll have to manually run each query once they are ready to go.
+1. Add the studio's new production, Toy Story 4 to the list of movies (you can use any director)
+```
+INSERT INTO movies
+VALUES (4, "Toy Story 4", "John Lasseter", 2021, 100);
+```
+2. Toy Story 4 has been released to critical acclaim! It had a rating of 8.7, and made 340 million domestically and 270 million internationally. Add the record to the BoxOffice table.
+```
+INSERT INTO boxoffice
+VALUES (4, 8.7, 340000000, 270000000);
+```
+
+### Exercise SQL Lesson 14
+#### Updating rows
+It looks like some of the information in our Movies database might be incorrect, so go ahead and fix them through the exercises below.
+1. The director for A Bug's Life is incorrect, it was actually directed by John Lasseter
+```
+UPDATE movies
+SET director= "John Lasseter"
+WHERE title = "A Bug's Life" 
+```
+2. The year that Toy Story 2 was released is incorrect, it was actually released in 1999
+```
+UPDATE movies
+SET year=1999
+WHERE title= "Toy Story 2"
+```
+3. Both the title and director for Toy Story 8 is incorrect! The title should be "Toy Story 3" and it was directed by Lee Unkrich
+```
+UPDATE movies
+SET title= "Toy Story 3" , director="Lee Unkrich"
+WHERE id=11;
+```
+
+### Exercise SQL Lesson 15
+#### Deleting rows
+The database needs to be cleaned up a little bit, so try and delete a few rows in the tasks below.
+1. This database is getting too big, lets remove all movies that were released before 2005.
+```
+DELETE FROM mytable
+WHERE condition;
+```
+2. Andrew Stanton has also left the studio, so please remove all movies directed by him.
+```
+DELETE FROM movies
+WHERE director="Andrew Stanton";
+```
+
+### Exercise SQL Lesson 16
+#### Creating tables
+In this exercise, you'll need to create a new table for us to insert some new rows into.
+
+Create a new table named Database with the following columns:
+– Name A string (text) describing the name of the database
+– Version A number (floating point) of the latest version of this database
+– Download_count An integer count of the number of times this database was downloaded
+This table has no constraints.
+
+```
+CREATE TABLE database (
+    Name TEXT,
+    Version FLOAT,
+    Download_count INT
+);
+```
+
+### Exercise SQL Lesson 17
+#### Altering tables
+Our exercises use an implementation that only support adding new columns, so give that a try below.
+1. Add a column named Aspect_ratio with a FLOAT data type to store the aspect-ratio each movie was released in.
+```
+ALTER TABLE movies
+  ADD column Aspect_ratio FLOAT;
+```
+2. Add another column named Language with a TEXT data type to store the language that the movie was released in. Ensure that the default for this language is English.
+```
+ALTER TABLE movies
+ADD column Language TEXT
+DEFAULT English;
+```
+
+### Exercise SQL Lesson 18
+#### Dropping tables
+We've reached the end of our exercises, so lets clean up by removing all the tables we've worked with.
+1. We've sadly reached the end of our lessons, lets clean up by removing the Movies table
+```
+DROP TABLE IF EXISTS movies;
+```
+2. And drop the BoxOffice table as well
+```
+DROP TABLE IF EXISTS boxoffice;
+```
+
+![finish](https://user-images.githubusercontent.com/117888017/212623815-5edcbbad-98d9-40d3-b8ff-94efb35d0c63.png)
 
 
 
