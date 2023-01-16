@@ -139,3 +139,122 @@ SELECT city, population
  LIMIT 2
  OFFSET 2;
 ```
+### Exercise SQL Lesson 6
+#### Multi-table queries with JOINs
+We've added a new table to the Pixar database so that you can try practicing some joins. The BoxOffice table stores information about the ratings and sales of each particular Pixar movie, and the Movie_id column in that table corresponds with the Id column in the Movies table 1-to-1. Try and solve the tasks below using the INNER JOIN introduced above.
+1. Find the domestic and international sales for each movie
+```
+SELECT title, domestic_sales, international_sales
+    FROM movies
+    INNER JOIN boxoffice ON (movies.id=boxoffice.movie_id)
+    ;
+```
+2. Show the sales numbers for each movie that did better internationally rather than domestically
+```
+SELECT title, domestic_sales, international_sales
+    FROM movies
+    INNER JOIN boxoffice ON (movies.id=boxoffice.movie_id)
+    WHERE international_sales > domestic_sales
+    ;
+```
+3. List all the movies by their ratings in descending order
+```
+SELECT *
+    FROM movies
+    INNER JOIN boxoffice ON (movies.id=boxoffice.movie_id)
+    ORDER BY rating DESC;
+```
+
+### Exercise SQL Lesson 7
+#### OUTER JOINs
+In this exercise, you are going to be working with a new table which stores fictional data about Employees in the film studio and their assigned office Buildings. Some of the buildings are new, so they don't have any employees in them yet, but we need to find some information about them regardless.
+
+Since our browser SQL database is somewhat limited, only the LEFT JOIN is supported in the exercise below.
+1. Find the list of all buildings that have employees
+```
+SELECT DISTINCT building FROM employees;
+```
+2. Find the list of all buildings and their capacity
+```
+SELECT * FROM buildings;
+```
+3. List all buildings and the distinct employee roles in each building (including empty buildings)
+```
+SELECT distinct building_name,  role 
+    FROM buildings
+    LEFT OUTER JOIN employees ON (employees.building=buildings.building_name);
+```
+
+### Exercise SQL Lesson 8
+#### A short note on NULLs
+This exercise will be a sort of review of the last few lessons. We're using the same Employees and Buildings table from the last lesson, but we've hired a few more people, who haven't yet been assigned a building.
+1. Find the name and role of all employees who have not been assigned to a building
+```
+SELECT * FROM employees
+  WHERE building IS NULL;
+```
+2. Find the names of the buildings that hold no employees
+```
+SELECT DISTINCT building_name, role 
+    FROM buildings
+    LEFT OUTER JOIN employees ON (employees.building=buildings.building_name)
+    WHERE building IS NULL;
+```
+
+### Exercise SQL Lesson 9
+#### Queries with expressions
+You are going to have to use expressions to transform the BoxOffice data into something easier to understand for the tasks below.
+1. List all movies and their combined sales in millions of dollars 
+```
+SELECT DISTINCT title, (domestic_sales+international_sales) / 1000000 AS sales
+FROM movies
+INNER JOIN boxoffice ON movies.id=boxoffice.movie_id
+;
+```
+2. List all movies and their ratings in percent
+```
+SELECT DISTINCT title, rating*10 AS rate_percent
+FROM movies
+INNER JOIN boxoffice ON movies.id=boxoffice.movie_id
+;
+```
+3. List all movies that were released on even number years
+```
+SELECT DISTINCT title, year
+FROM movies
+INNER JOIN boxoffice ON movies.id=boxoffice.movie_id
+WHERE year % 2 = 0
+;
+```
+
+### Exercise SQL Lesson 10
+#### Queries with aggregates (Pt. 1)
+For this exercise, we are going to work with our Employees table. Notice how the rows in this table have shared data, which will give us an opportunity to use aggregate functions to summarize some high-level metrics about the teams. Go ahead and give it a shot.
+1. Find the longest time that an employee has been at the studio
+```
+SELECT MAX(years_employed) FROM employee;
+```
+2. For each role, find the average number of years employed by employees in that role
+```
+SELECT role, AVG(years_employed) 
+    FROM employees
+    GROUP BY role;
+```
+3. Find the total number of employee years worked in each building
+```
+SELECT building, SUM(years_employed)
+  FROM employees
+  GROUP BY building;
+```
+
+
+
+
+
+
+
+
+
+
+
+
