@@ -1,3 +1,7 @@
+![first](https://user-images.githubusercontent.com/117888017/212624854-85cbc92c-f11d-4096-9f2e-e60e34123e99.png)
+
+  https://sqlbolt.com/
+
 ### Exercise SQL Lesson 1
 We will be using a database with data about some of Pixar's classic movies for most of our exercises. This first exercise will only involve the Movies table, and the default query below currently shows all the properties of each movie. To continue onto the next lesson, alter the query to find the exact information we need for each task.
 1. Find the title of each film
@@ -319,7 +323,8 @@ WHERE title= "Toy Story 2"
 ```
 UPDATE movies
 SET title= "Toy Story 3" , director="Lee Unkrich"
-WHERE id=11;
+WHERE id=11;![first](https://user-images.githubusercontent.com/117888017/212624720-1a8ea9fa-ace9-44b3-88ee-962e414d430f.png)
+
 ```
 
 ### Exercise SQL Lesson 15
